@@ -31,7 +31,7 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 //
 // This API enables the communication between a validator client and an SSV node
 service SSV {
-  rpc GetTaskStream(StreamRequest) returns (stream Task) {
+  rpc GetTaskStream(StreamRequest) returns (stream SSVTask) {
     option (google.api.http) = {
       get: "/eth/v1alpha1/ssv/stream"
     };
@@ -52,10 +52,11 @@ message StreamRequest {
   repeated StreamTopics topics = 2;
 }
 
-message Task {
-  StreamTopics topic = 1;
+message SSVTask {
+  bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\""];
+  StreamTopics topic = 2;
   oneof data {
-      AttestationData attestation = 2;
-      BeaconBlockHeader block = 3;
+      AttestationData attestation = 3;
+      BeaconBlockHeader block = 4;
   }
 }
