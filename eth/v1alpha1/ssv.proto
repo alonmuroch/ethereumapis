@@ -48,8 +48,7 @@ enum StreamTopics {
 
 message StreamRequest {
   // A 48 byte validator public key.
-  bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\""];
-  repeated StreamTopics topics = 2;
+  repeated StreamTopics topics = 1;
 }
 
 message SSVTask {
@@ -57,6 +56,6 @@ message SSVTask {
   StreamTopics topic = 2;
   oneof data {
       AttestationData attestation = 3;
-      BeaconBlockHeader block = 4;
+      BeaconBlock block = 4;
   }
 }
